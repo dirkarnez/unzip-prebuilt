@@ -16,10 +16,10 @@ jobs:
       tagName: v1.3.2 # later
       mingwTargetZip: unzip-${{ github.ref_name }}-mingw64-x86_64-posix-seh-rev0-8.1.0.zip
     steps:
+      - uses: actions/checkout@v3
+      
       - shell: cmd
         run: |
-          curl https://zenlayer.dl.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz -L -O -J &&^
-          dir &&^
           tar -zxvf unzip60.tar.gz &&^
           cd unzip60 &&^
           dir
