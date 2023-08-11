@@ -41,7 +41,7 @@ jobs:
             set CD_LINUX=%CD:\=/%
             gcc --version &&^
             cd unzip60 &&^
-            make -f win32/makefile.gcc
+            mingw32-make -f win32/makefile.gcc
             
       - name: Archive Release
         uses: thedoctor0/zip-release@master
