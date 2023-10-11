@@ -16,13 +16,20 @@ jobs:
       tagName: v1.3.2 # later
       mingwTargetZip: unzip-${{ github.ref_name }}-mingw64-x86_64-posix-seh-rev0-8.1.0.zip
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
-      - shell: cmd
-        run: |
-          tar -zxvf unzip60.tar.gz &&^
-          cd unzip60 &&^
-          dir
+      - uses: actions/checkout@v4
+        with:
+          repository: apple-oss-distributions/zip
+          path: zip
+          ref: ${{ env.tagName }}
+          submodules: true
+
+      - name: Install MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          install: make autoconf automake libtool autogen perl patch
           
       - name: curl x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
         shell: cmd
@@ -30,18 +37,30 @@ jobs:
           curl https://github.com/dirkarnez/cpp-tools/raw/main/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -L -O -J &&^
           7z.exe x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
 
+
       - name: set PATH, check mingw version, cmake generate, build and install
-        shell: cmd
+        shell: msys2 {0}
         run: |
-            set PATH=^
-            ${{ github.workspace }}\mingw64;^
-            ${{ github.workspace }}\mingw64\bin;^
-            ${{ github.workspace }}\PortableGit-2.38.1-64-bit\bin;^
-            ${{ github.workspace }}\cmake-3.24.0-windows-x86_64\bin;
-            set CD_LINUX=%CD:\=/%
-            gcc --version &&^
-            cd unzip60 &&^
-            mingw32-make CC_CPU_OPT="" NOASM=1 -f win32/makefile.gcc
+            workspace=$(pwd) &&
+            export PATH="$workspace/mingw64:$workspace/mingw64/bin:$workspace/msys64/usr/bin:/usr/bin" &&
+            cd zip && 
+            cd unzip &&
+            g++ --version && 
+            make patchsrc && 
+            ls
+
+      # - name: set PATH, check mingw version, cmake generate, build and install
+      #   shell: cmd
+      #   run: |
+      #       set PATH=^
+      #       ${{ github.workspace }}\mingw64;^
+      #       ${{ github.workspace }}\mingw64\bin;^
+      #       ${{ github.workspace }}\PortableGit-2.38.1-64-bit\bin;^
+      #       ${{ github.workspace }}\cmake-3.24.0-windows-x86_64\bin;
+      #       set CD_LINUX=%CD:\=/%
+      #       gcc --version &&^
+      #       cd unzip60 &&^
+      #       mingw32-make CC_CPU_OPT="" NOASM=1 -f win32/makefile.gcc
             
       - name: Archive Release
         uses: thedoctor0/zip-release@master
