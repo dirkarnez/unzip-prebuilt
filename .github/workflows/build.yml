@@ -49,11 +49,12 @@ jobs:
             g++ --version && 
             make unpacksrc patchsrc && 
             cd unzip60 &&
-            make -f win32/Makefile.gcc install prefix="${{ env.installationPath }}" install
+            make -f win32/Makefile.gcc DESTDIR="$workspace/123" install
             ls
             
       - shell: cmd
         run: dir /s
+        working-directory: '123'
   
       # - name: set PATH, check mingw version, cmake generate, build and install
       #   shell: cmd
