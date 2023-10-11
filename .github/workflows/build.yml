@@ -49,6 +49,8 @@ jobs:
             g++ --version && 
             make unpacksrc patchsrc && 
             cd obj &&
+            cd unzip60 && 
+            ls /s
             make -f win32/Makefile.gcc DESTDIR="$workspace/123" libunzip32.a
             ls /s
             
