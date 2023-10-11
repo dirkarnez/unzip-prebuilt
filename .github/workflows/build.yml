@@ -51,7 +51,6 @@ jobs:
             cd obj &&
             cd unzip60 && 
             make CC_CPU_OPT="-march=x86-64" NOASM=1 prefix="$workspace/${{ env.installationPath }}" -f win32/Makefile.gcc lib
-            make install 
             cd $workspace/${{ env.installationPath }}
             ls -R
             
