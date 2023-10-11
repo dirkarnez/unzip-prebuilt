@@ -35,6 +35,9 @@ jobs:
           curl https://github.com/dirkarnez/cpp-tools/raw/main/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -L -O -J &&^
           7z.exe x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
 
+      - shell: msys2 {0}
+        run: mkdir -pv ${{ env.installationPath }}
+        
       - name: set PATH, check mingw version, cmake generate, build and install
         shell: msys2 {0}
         run: |
@@ -53,9 +56,23 @@ jobs:
             make CC_CPU_OPT="-march=x86-64" NOASM=1 -f win32/Makefile.gcc lib
             
       - shell: cmd
+        working-directory: ${{ env.installationPath }}
+        run: |
+          mkdir "lib" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\libunzip32.a" "lib" &&^
+          mkdir "include\win32" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzip.h" "include" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzpriv.h" "include" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\globals.h" "include" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\win32\w32cfg.h" "include\win32" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\crypt.h" "include" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzvers.h" "include" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\consts.h" "include"
+          
+      - shell: cmd
         run: dir /s
         working-directory: ${{ env.installationPath }}
-  
+        
       # - name: set PATH, check mingw version, cmake generate, build and install
       #   shell: cmd
       #   run: |
