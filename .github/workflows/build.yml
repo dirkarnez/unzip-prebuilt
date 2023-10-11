@@ -51,12 +51,12 @@ jobs:
             cd obj &&
             cd unzip60 && 
             ls -R
-            make CC_CPU_OPT="-march=x86-64" NOASM=1 DESTDIR="$workspace/${{ env.installationPath }}" -f win32/Makefile.gcc libunzip32.a
-            ls -R
+            make CC_CPU_OPT="-march=x86-64" NOASM=1 -f win32/Makefile.gcc lib
+            make CC_CPU_OPT="-march=x86-64" NOASM=1 prefix="$workspace/${{ env.installationPath }}" -f win32/Makefile.gcc install
             
       - shell: cmd
         run: dir /s
-        working-directory: 'zip/unzip/obj'
+        working-directory: ${{ env.installationPath }}
   
       # - name: set PATH, check mingw version, cmake generate, build and install
       #   shell: cmd
