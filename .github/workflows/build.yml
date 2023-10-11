@@ -17,8 +17,6 @@ jobs:
       mingwTargetZip: unzip-${{ github.ref_name }}-mingw64-x86_64-posix-seh-rev0-8.1.0.zip
     steps:
       - uses: actions/checkout@v4
-      
-      - uses: actions/checkout@v4
         with:
           repository: apple-oss-distributions/zip
           path: zip
