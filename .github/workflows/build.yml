@@ -51,7 +51,10 @@ jobs:
             cd unzip60 &&
             make -f win32/Makefile.gcc install prefix="${{ env.installationPath }}" install
             ls
-
+            
+      - shell: cmd
+        run: dir /s
+  
       # - name: set PATH, check mingw version, cmake generate, build and install
       #   shell: cmd
       #   run: |
