@@ -13,7 +13,7 @@ jobs:
     env:
       libraryName: unzip
       cmakeInstallationPath: unzip-installation
-      tagName: v1.3.2 # later
+      tagName: zip-22 # later
       mingwTargetZip: unzip-${{ github.ref_name }}-mingw64-x86_64-posix-seh-rev0-8.1.0.zip
     steps:
       - uses: actions/checkout@v4
