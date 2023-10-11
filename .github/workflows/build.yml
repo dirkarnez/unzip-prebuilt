@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     env:
       libraryName: unzip
-      cmakeInstallationPath: unzip-installation
+      installationPath: unzip-installation
       tagName: zip-22 # later
       mingwTargetZip: unzip-${{ github.ref_name }}-mingw64-x86_64-posix-seh-rev0-8.1.0.zip
     steps:
@@ -35,7 +35,6 @@ jobs:
           curl https://github.com/dirkarnez/cpp-tools/raw/main/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -L -O -J &&^
           7z.exe x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
 
-
       - name: set PATH, check mingw version, cmake generate, build and install
         shell: msys2 {0}
         run: |
@@ -48,7 +47,9 @@ jobs:
             sed -i "s/^endif.*$//g" Makefile &&
             sed -i "s/^include.*CoreOS\/Standard\/Standard.make$//g" Makefile &&
             g++ --version && 
-            make unpacksrc && 
+            make unpacksrc patchsrc && 
+            cd unzip60 &&
+            make -f win32/Makefile.gcc install prefix="${{ env.installationPath }}" install
             ls
 
       # - name: set PATH, check mingw version, cmake generate, build and install
@@ -68,12 +69,12 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "cereal/cmake-build/${{ env.cmakeInstallationPath }}"
+          directory: "${{ env.installationPath }}"
           filename: "${{ env.mingwTargetZip }}"
         
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "cereal/cmake-build/${{ env.cmakeInstallationPath }}/${{ env.mingwTargetZip }}"
+          artifacts: "${{ env.installationPath }}/${{ env.mingwTargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
