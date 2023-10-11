@@ -48,9 +48,9 @@ jobs:
             sed -i "s/^include.*CoreOS\/Standard\/Standard.make$//g" Makefile &&
             g++ --version && 
             make unpacksrc patchsrc && 
-            cd unzip60 &&
+            cd obj &&
             make -f win32/Makefile.gcc DESTDIR="$workspace/123" install
-            ls
+            ls /s
             
       - shell: cmd
         run: dir /s
