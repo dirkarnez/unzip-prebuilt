@@ -43,10 +43,12 @@ jobs:
             export PATH="$workspace/mingw64:$workspace/mingw64/bin:$workspace/msys64/usr/bin:/usr/bin" &&
             cd zip && 
             cd unzip &&
-            mkdir -pv ./CoreOS/Standard &&
-            echo "" > ./CoreOS/Standard/Standard.make &&
+            sed -i "s/^ifndef .*$//g" Makefile  &&
+            sed -i "s/^CoreOSMakefiles.*$//g" Makefile &&
+            sed -i "s/^endif.*$//g" Makefile &&
+            sed -i "s/^include.*CoreOS\/Standard\/Standard.make$//g" Makefile &&
             g++ --version && 
-            make patchsrc && 
+            make unpacksrc && 
             ls
 
       # - name: set PATH, check mingw version, cmake generate, build and install
