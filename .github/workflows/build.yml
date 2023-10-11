@@ -51,7 +51,7 @@ jobs:
             cd obj &&
             cd unzip60 && 
             ls -R
-            make -f win32/Makefile.gcc CC_CPU_OPT=x86-64 DESTDIR="$workspace/123" libunzip32.a
+            make CC_CPU_OPT="x86-64" NOASM=1 DESTDIR="$workspace/123" -f win32/Makefile.gcc libunzip32.a
             ls -R
             
       - shell: cmd
