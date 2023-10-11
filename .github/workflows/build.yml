@@ -58,8 +58,8 @@ jobs:
       - shell: cmd
         working-directory: ${{ env.installationPath }}
         run: |
-          mkdir "lib" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\libunzip32.a" "lib" &&^
+          mkdir "lib\win32" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\win32\libunzip32.a" "lib\win32" &&^
           mkdir "include\win32" &&^
           xcopy /H /Y /C "zip\unzip\obj\unzip60\unzip.h" "include" &&^
           xcopy /H /Y /C "zip\unzip\obj\unzip60\unzpriv.h" "include" &&^
