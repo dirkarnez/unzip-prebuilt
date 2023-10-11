@@ -43,6 +43,7 @@ jobs:
             export PATH="$workspace/mingw64:$workspace/mingw64/bin:$workspace/msys64/usr/bin:/usr/bin" &&
             cd zip && 
             cd unzip &&
+            echo "" > ./CoreOS/Standard/Standard.make
             g++ --version && 
             make patchsrc && 
             ls
