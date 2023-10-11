@@ -49,12 +49,12 @@ jobs:
             g++ --version && 
             make unpacksrc patchsrc && 
             cd obj &&
-            make -f win32/Makefile.gcc DESTDIR="$workspace/123" install
+            make -f win32/Makefile.gcc DESTDIR="$workspace/123" libunzip32.a
             ls /s
             
       - shell: cmd
         run: dir /s
-        working-directory: '123'
+        working-directory: 'zip/unzip/obj'
   
       # - name: set PATH, check mingw version, cmake generate, build and install
       #   shell: cmd
