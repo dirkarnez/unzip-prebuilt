@@ -55,19 +55,20 @@ jobs:
             cd unzip60 && 
             make CC_CPU_OPT="-march=x86-64" NOASM=1 -f win32/Makefile.gcc lib &&
             ls -R
-            
+
+             xcopy /H /Y /C "liblspcpp.a" "export\liblspcpp\lib"
       - shell: cmd
         run: |
           mkdir "lib" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\libunzip32.a" "${{ env.installationPath }}\lib" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\libunzip32.a" "${{ env.installationPath }}\lib\" &&^
           mkdir "include\win32" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzip.h" "${{ env.installationPath }}\include" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzpriv.h" "${{ env.installationPath }}\include" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\globals.h" "${{ env.installationPath }}\include" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\win32\w32cfg.h" "${{ env.installationPath }}\include\win32" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\crypt.h" "${{ env.installationPath }}\include" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzvers.h" "${{ env.installationPath }}\include" &&^
-          xcopy /H /Y /C "zip\unzip\obj\unzip60\consts.h" "${{ env.installationPath }}\include"
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzip.h" "${{ env.installationPath }}\include\" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzpriv.h" "${{ env.installationPath }}\include\" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\globals.h" "${{ env.installationPath }}\include\" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\win32\w32cfg.h" "${{ env.installationPath }}\include\win32\" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\crypt.h" "${{ env.installationPath }}\include\" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\unzvers.h" "${{ env.installationPath }}\include\" &&^
+          xcopy /H /Y /C "zip\unzip\obj\unzip60\consts.h" "${{ env.installationPath }}\include\"
           
       - shell: cmd
         run: dir /s
